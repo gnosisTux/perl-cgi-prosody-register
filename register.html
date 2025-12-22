@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <title>XMPP Registration</title>
+</head>
+<body>
+    <img style="width: 10%; height: auto;" src="../img/xmpplogo.png">
+    <h2>XMPP Registration</h2>
+
+    <form action="/cgi-bin/register.pl" method="POST">
+        <!-- User + Domain -->
+        <label for="usuario">User:</label>
+        <input type="text" id="usuario" name="usuario" placeholder="user" required>
+        @
+        <select name="dominio" id="dominio">
+            <!-- OPTIONS_CGI -->
+        </select>
+        <br><br>
+
+        <!-- Password -->
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br><br>
+
+        <label for="password_check">Confirm Password:</label>
+        <input type="password" id="password_check" name="password_check" required>
+        <br><br>
+
+        <!-- Captcha -->
+        <label for="captcha">Captcha:</label><br>
+        <img src="/cgi-bin/captcha.pl" alt="Captcha" style="border:1px solid #000; margin-bottom:5px;"><br>
+        <input type="text" id="captcha" name="captcha" placeholder="Enter the text from the image" required>
+        <br><br>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <!-- Script to load domains from CGI -->
+    <script>
+    fetch('/cgi-bin/dominios.pl')  // path to your CGI
+        .then(resp => resp.text())
+        .then(html => {
+            document.getElementById('dominio').innerHTML = html;
+        })
+        .catch(err => console.error("Error loading domains:", err));
+    </script>
+</body>
+</html>
